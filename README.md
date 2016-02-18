@@ -14,7 +14,7 @@ This will place you in an interactive [REPL](https://en.wikipedia.org/wiki/Read%
     7
     Scheme>>> ...
 
-Press <kbd>C-c</kdb> to exit.
+Press <kbd>C-c</kbd> to exit.
 
 ## Chapters Completed
 
