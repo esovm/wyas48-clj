@@ -1,16 +1,15 @@
 (ns wyas48-clj.printer
-  (:require [clojure.string :refer [join]]))
+  (:require [clojure.string :refer [join]]
+            [clojure.core.match :refer [match]]))
 
 (defn expr->string
   "Calculates the String representation of an expression."
   [expr]
-  (when-let [[tag & values] expr]
-    (case tag
-      :atom   (first values)
-      :string (first values)
-      :number (str (first values))
-      :bool   (if (first values) "#t" "#f")
-      :dotted (let [[p1 p2] values]
-                (str "(" (expr->string p1) " . " (expr->string p2) ")"))
-      :list   (let [elem-strs (map expr->string values)]
-                (str "(" (join " " elem-strs) ")")))))
+  (match expr
+    [:atom atom]     atom
+    [:string string] (str "\"" string "\"")
+    [:number num]    (str num)
+    [:bool b]        (if b "#t" "#f")
+    [:dotted e1 e2]  (str "(" (expr->string e1) " . " (expr->string e2) ")")
+    [:list & exprs]  (let [strings (map expr->string exprs)]
+                       (str "(" (join " " strings) ")"))))

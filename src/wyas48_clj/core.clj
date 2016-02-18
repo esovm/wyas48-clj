@@ -1,5 +1,6 @@
 (ns wyas48-clj.core
   (:require [clojure.string :refer [trim]]
+            [clojure.core.match :refer [match]]
             [wyas48-clj.parser :refer [parse-string]]
             [wyas48-clj.printer :refer [expr->string]])
   (:import (jline ConsoleReader))
@@ -50,9 +51,9 @@
         ;; Valid input.
         :else
           (let [result (parse-string input)]
-            (case (first result)
-              :success (doseq [exp (second result)] (println (expr->string exp)))
-              :failure (println "FAILURE" (second result))))))))
+            (match result
+              [:success exps] (doseq [exp exps] (println (expr->string exp)))
+              [:failure err]  (println "FAILURE" err)))))))
 
 (defn -main
   "Main entrypoint into the application."
