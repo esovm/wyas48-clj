@@ -5,9 +5,9 @@
   (:import (jline ConsoleReader))
   (:gen-class))
 
-(def reader (ConsoleReader.))
-
-(defn balanced
+(defn- balanced?
+  "Predicate determining if the input string, s, has balanced parenthesis.
+  If no parenthesis are in the string, true is returned."
   [s]
   (loop [check-str (seq s), open 0]
     (if (seq? check-str)
@@ -17,25 +17,28 @@
         (recur (next check-str) open))
       (zero? open))))
 
-(defn read-jline []
-  (.readLine reader))
-
-(defn read-until-balanced []
+(defn- read-until-balanced
+  "Returns a string, enforcing balanced parenthesis.
+  Continues prompting until the input is well-formed."
+  [reader]
   (loop [buffer ""]
-    (let [line (-> (read-jline) trim)
+    (let [line (-> (.readLine reader) trim)
           total-input (str buffer "\n" line)]
       (cond
-        (= "\n" total-input)   ""
-        (balanced total-input) total-input
-        :else                  (do (print "    ... > ")
-                                   (flush)
-                                   (recur total-input))))))
+        (= "\n" total-input)    ""
+        (balanced? total-input) total-input
+        :else                   (do (print "    ... > ")
+                                    (flush)
+                                    (recur total-input))))))
 
-(defn repl []
+(defn- repl
+  "Implementation of the main Read-Eval-Print-Loop.
+  Requires a JLine reader to grab input from."
+  [reader]
   (while true
     (print "Scheme>>> ")
     (flush)
-    (let [input (read-until-balanced)]
+    (let [input (read-until-balanced reader)]
       (cond
         ;; Exit condition.
         (or (= input "quit") (= input "exit"))
@@ -52,5 +55,7 @@
               :failure (println "FAILURE" (second result))))))))
 
 (defn -main
+  "Main entrypoint into the application."
   [& args]
-  (repl))
+  (let [reader (ConsoleReader.)]
+    (repl reader)))
