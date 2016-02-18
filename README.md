@@ -32,9 +32,9 @@ Press <kbd>C-c</kbd> to exit.
 
 - Instead of using a parser combinator library, I used [Instaparse](https://github.com/Engelberg/instaparse) and wrote an [Extended Backus–Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form) grammar.
 
-## Planned Enhancements
+## Enhancements
 
-- [ ] REPL Readline support
+- [x] REPL Readline support
 - [ ] Allow comments in grammar
 - [ ] "Standard library"
 
