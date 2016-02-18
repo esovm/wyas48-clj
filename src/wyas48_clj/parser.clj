@@ -15,7 +15,8 @@
 
 (defn parse-string
   "Parses a string into an expression representation.
-  Returns a sequence of parsed expressions."
+  Returns a vector of status, either :success or :failure, and a sequence of parsed
+  expressions or an error, respectively."
   [input-string]
   (let [transformer (partial insta/transform transformations)
         result (-> input-string parser)]
