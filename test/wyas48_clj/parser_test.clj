@@ -29,7 +29,7 @@
     (is (= (parse-string "(23 24 (test 34))") [:list [:number 23] [:number 24] [:list [:atom "test"] [:number 34]]]))))
 
 (deftest quote-parsing-test
-  (testing "It can parse quotes"
+  (testing "It can parse syntax quotes"
     (is (= (parse-string "'34") [:list [:atom "quote"] [:number 34]]))
     (is (= (parse-string "'()") [:list [:atom "quote"] [:list]]))
     (is (= (parse-string "'(3 4 5)") [:list [:atom "quote"] [:list [:number 3] [:number 4] [:number 5]]]))))
