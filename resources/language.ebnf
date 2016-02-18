@@ -1,8 +1,9 @@
-<S> = expr
-expr = atom | string | number | quoted | dotted | list
+<S> = expr+
+expr = atom | string | number | bool | quoted | dotted | list
 quoted = <'\''> expr
 dotted = <'('> expr <'.'> expr <')'>
 list = <'('> expr* <')'>
 number = #'[0-9]+'
 atom = #'[a-zA-Z!#$%&|*+\-/:<=>?$^_~][a-zA-Z0-9!#$%&|*+\-/:<=>?$^_~]*'
+bool = '#t'|'#f'
 string = <'"'>#'[^"]*'<'"'>
