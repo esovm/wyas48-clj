@@ -27,10 +27,10 @@
   [func]
   (ex-info (format "Unrecognized primitive function args: %s" func) {}))
 
-; (defn unbound-var-exception
-;   "Exception for referencing an unbound variable."
-;   [msg func]
-;   (ex-info "" {}))
+(defn unbound-var-exception
+  "Exception for referencing an unbound variable."
+  [var]
+  (ex-info (format "Getting an unbound variable " var) {}))
 
 (defn generic-exception
   "A generic exception."
