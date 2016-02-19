@@ -34,6 +34,15 @@
                                       (flush)
                                       (recur total-input)))))))
 
+(defn- rep
+  "Read-Eval-Print... A single rep of a REPL? ;)"
+  [input]
+  (try
+    (let [result (parse-string input)]
+      (doseq [expr result]
+        (-> expr evaluate expr->string println)))
+    (catch Exception e (println (.getMessage e)))))
+
 (defn- repl
   "Implementation of the main Read-Eval-Print-Loop."
   []
@@ -51,20 +60,7 @@
           (do (println) (flush))
         ;; Valid input.
         :else
-          (try
-            (let [result (parse-string input)]
-              (doseq [expr result]
-                      (println (-> expr evaluate expr->string))))
-            (catch Exception e (println (.getMessage e))))))))
-
-(defn- rep
-  "Read-Eval-Print... A single rep of a REPL? ;)"
-  [input]
-  (try
-    (let [result (parse-string input)]
-      (doseq [expr result]
-        (-> expr evaluate expr->string println)))
-    (catch Exception e (println (.getMessage e)))))
+          (rep input)))))
 
 (defn- die
   "Exits the program and returns a status to the OS."
