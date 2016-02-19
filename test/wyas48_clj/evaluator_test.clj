@@ -18,3 +18,13 @@
 (deftest number-evaluation-test
   (testing
     (is (= (evaluate [:list [:atom "quote"] [:number 42]]) [:number 42]))))
+
+(deftest evaluation-part-1-test
+  (testing
+    (is (= (evaluate [:list [:atom "+"] [:number 3] [:number 5]]) [:number 8]))
+    (is (= (evaluate [:list [:atom "-"] [:number 3] [:number 5]]) [:number -2]))
+    (is (= (evaluate [:list [:atom "*"] [:number 3] [:number 5]]) [:number 15]))
+    (is (= (evaluate [:list [:atom "/"] [:number 15] [:number 5]]) [:number 3]))
+    (is (= (evaluate [:list [:atom "mod"] [:number 15] [:number 5]]) [:number 0]))
+    (is (= (evaluate [:list [:atom "quotient"] [:number 15] [:number 2]]) [:number 7]))
+    (is (= (evaluate [:list [:atom "remainder"] [:number 15] [:number 2]]) [:number 1]))))

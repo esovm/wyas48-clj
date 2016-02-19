@@ -19,7 +19,7 @@ Press <kbd>C-c</kbd> to exit.
 ## Chapters Completed
 
 - [x] Parsing
-- [ ] Evaluation, Part 1
+- [x] Evaluation, Part 1
 - [ ] Error Checking and Exceptions
 - [ ] Evaluation, Part 2
 - [ ] Building a REPL
