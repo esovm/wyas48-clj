@@ -1,14 +1,16 @@
 (ns wyas48-clj.exceptions
-  (:require [wyas48-clj.printer :refer [expr->string]]))
+  (:require [clojure.string :refer [join]]
+            [wyas48-clj.printer :refer [expr->string]]))
 
 (defn invalid-argument-count-exception
   "Exception for functions being called with the incorrect number of arguments."
   [expected found]
-  (ex-info (format "Expected %d args; found %s" expected (expr->string found)) {}))
+  (ex-info (format "Expected %d args; found %s" expected (join " " (map expr->string found))) {}))
 
-; (defn type-mismatch-error-exception
-;   "Exception for type 'system' errors."
-;   (ex-info "" {}))
+(defn type-mismatch-exception
+  "Exception for type 'system' errors."
+  [expected found]
+  (ex-info (format "Invalid type: expected %s, found %s" expected (expr->string found)) {}))
 
 (defn parse-exception
   "Exception at parse-time."

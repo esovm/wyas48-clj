@@ -7,15 +7,19 @@
   [e]
   (match e
     [:number num]    num
-    [:string string] (Integer/parseInt string)
+    [:string string] (try
+                       (Integer/parseInt string)
+                       (catch Exception ex (throw (type-mismatch-exception "number" e))))
     [:list [n]]      (coerce-to-number n)
-    :else            0))
+    :else            (throw (type-mismatch-exception "number" e))))
 
 (defn- numeric-binary-primitive
   "Returns a primitive function performing a folded version of f among its arguments."
   [f]
   (fn [& args]
-    [:number (reduce f (map coerce-to-number args))]))
+    (if (>= (count args) 2)
+      [:number (reduce f (map coerce-to-number args))]
+      (throw (invalid-argument-count-exception 2 args)))))
 
 (defn- type-testing-primitive
   "Returns a primitive function that tests an argument against the given type."
