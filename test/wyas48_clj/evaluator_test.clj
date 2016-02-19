@@ -27,10 +27,15 @@
     (is (= (evaluate [:list [:atom "/"] [:number 15] [:number 5]]) [:number 3]))
     (is (= (evaluate [:list [:atom "mod"] [:number 15] [:number 5]]) [:number 0]))
     (is (= (evaluate [:list [:atom "quotient"] [:number 15] [:number 2]]) [:number 7]))
-    (is (= (evaluate [:list [:atom "remainder"] [:number 15] [:number 2]]) [:number 1]))
+    (is (= (evaluate [:list [:atom "remainder"] [:number 15] [:number 2]]) [:number 1]))))
+
+(deftest evaluation-part-1-additions-test
+  (testing
     (is (= (evaluate [:list [:atom "string?"] [:string "hello"]]) [:bool true]))
     (is (= (evaluate [:list [:atom "string?"] [:number 15]]) [:bool false]))
     (is (= (evaluate [:list [:atom "number?"] [:number 15]]) [:bool true]))
     (is (= (evaluate [:list [:atom "number?"] [:string "15"]]) [:bool false]))
     (is (= (evaluate [:list [:atom "symbol?"] [:list [:atom "quote"] [:atom "test"]]]) [:bool true]))
-    (is (= (evaluate [:list [:atom "symbol?"] [:string "bad"]]) [:bool false]))))
+    (is (= (evaluate [:list [:atom "symbol?"] [:string "bad"]]) [:bool false]))
+    (is (= (evaluate [:list [:atom "symbol->string"] [:list [:atom "quote"] [:atom "test"]]]) [:string "test"]))
+    (is (= (evaluate [:list [:atom "string->symbol"] [:string "some-symbol"]]) [:atom "some-symbol"]))))

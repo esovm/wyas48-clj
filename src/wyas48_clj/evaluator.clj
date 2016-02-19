@@ -11,15 +11,24 @@
     :else            0))
 
 (defn- numeric-binary-primitive
-  "Returns a function taking "
+  "Returns a primitive function performing a folded version of f among its arguments."
   [f]
   (fn [& args]
     [:number (reduce f (map coerce-to-number args))]))
 
 (defn- type-testing-primitive
+  "Returns a primitive function that tests an argument against the given type."
   [type]
   (fn [arg]
     [:bool (= (first arg) type)]))
+
+(defn- swap-values-primitive
+  "Returns a primitive function that swaps values for from and to types."
+  [from to]
+  (fn [arg]
+    (match arg
+      [from val] [to val]
+      :else [:bool false])))
 
 (def ^:private primitives
   "Primitive, built-in operations."
@@ -32,7 +41,9 @@
    "remainder" (numeric-binary-primitive rem)
    "symbol?" (type-testing-primitive :atom)
    "string?" (type-testing-primitive :string)
-   "number?" (type-testing-primitive :number)})
+   "number?" (type-testing-primitive :number)
+   "symbol->string" (swap-values-primitive :atom :string)
+   "string->symbol" (swap-values-primitive :string :atom)})
 
 (defn- apply-func
   "Function application."
