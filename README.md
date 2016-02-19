@@ -31,6 +31,8 @@ Press <kbd>C-c</kbd> to exit.
 ## Differences in Approach
 
 - Instead of using a parser combinator library, I used [Instaparse](https://github.com/Engelberg/instaparse) and wrote an [Extended Backus–Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form) grammar.
+- I took a test-driven approach for developing this. Obviously, this wasn't the focus (and thus fault) of the original tutorial.
+- My included REPL is a little bit more sophisticated: it supports a GNU Readline-like editing experience and allows for multi-line inputs.
 
 ## Enhancements
 
