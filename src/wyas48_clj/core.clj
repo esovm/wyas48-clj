@@ -22,7 +22,7 @@
 (defn- read-until-balanced
   "Returns a string, enforcing balanced parenthesis.
   Continues prompting until the input is well-formed."
-  [reader]
+  []
   (let [reader (ConsoleReader.)]
     (loop [buffer ""]
       (let [line (-> (.readLine reader) trim)
@@ -67,6 +67,6 @@
   "Main entrypoint into the application."
   [& args]
   (match args
-    []     (repl)
+    nil    (repl)
     [expr] (println "No support for command line evaluation yet.")
     :else  (die "Invalid command line arguments provided." false)))
