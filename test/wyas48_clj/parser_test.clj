@@ -5,8 +5,8 @@
 (defn- test-parse
   "Test helper for parsing tests."
   [input expected]
-  (let [[status [result]] (parse-string input)]
-    (is (and (= status :success) (= result expected)))))
+  (let [[result] (parse-string input)]
+    (is (= result expected))))
 
 (deftest number-parsing-test
   (testing "It can parse numbers"

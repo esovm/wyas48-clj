@@ -51,10 +51,11 @@
           (do (println) (flush))
         ;; Valid input.
         :else
-          (let [result (parse-string input)]
-            (match result
-              [:success exprs] (doseq [expr exprs] (println (-> expr evaluate expr->string)))
-              [:failure err]   (println "FAILURE" err)))))))
+          (try
+            (let [result (parse-string input)]
+              (doseq [expr result]
+                      (println (-> expr evaluate expr->string))))
+            (catch Exception e (println (.getMessage e))))))))
 
 (defn -main
   "Main entrypoint into the application."

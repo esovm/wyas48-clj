@@ -1,5 +1,6 @@
 (ns wyas48-clj.evaluator
-  (:require [clojure.core.match :refer [match]]))
+  (:require [clojure.core.match :refer [match]]
+            [wyas48-clj.exceptions :refer :all]))
 
 (defn- coerce-to-number
   "Attempts to coerce an expression into a number."
@@ -47,9 +48,10 @@
 
 (defn- apply-func
   "Function application."
-  [func args]
-  (let [f (get primitives func)]
-    (apply f args)))
+  [func-as-name args]
+  (if-let [f (get primitives func-as-name)]
+    (apply f args)
+    (throw (not-a-function-exception func-as-name))))
 
 (defn evaluate
   "Evaluates the value of the given input expression."
@@ -59,4 +61,5 @@
     [:bool b]                      expr
     [:number num]                  expr
     [:list [:atom "quote"] quoted] quoted
-    [:list [:atom func] & args]    (apply-func func (map evaluate args))))
+    [:list [:atom func] & args]    (apply-func func (map evaluate args))
+    :else                          (throw (bad-special-form-exception expr))))

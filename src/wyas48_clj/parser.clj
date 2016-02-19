@@ -1,5 +1,6 @@
 (ns wyas48-clj.parser
-  (:require [instaparse.core :as insta]))
+  (:require [instaparse.core :as insta]
+            [wyas48-clj.exceptions :refer :all]))
 
 (def ^:private parser
   "Bare parser instance."
@@ -14,12 +15,10 @@
    :expr   (fn [e] e)})
 
 (defn parse-string
-  "Parses a string into an expression representation.
-  Returns a vector of status, either :success or :failure, and a sequence of parsed
-  expressions or an error, respectively."
+  "Returns a sequence of parsed expressions, or throws an exception if couldn't parse."
   [input-string]
   (let [transformer (partial insta/transform transformations)
         result (-> input-string parser)]
     (if (insta/failure? result)
-      [:failure result]
-      [:success (map transformer result)])))
+      (throw (parse-exception result))
+      (map transformer result))))
