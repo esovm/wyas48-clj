@@ -22,7 +22,7 @@ Press <kbd>C-c</kbd> to exit.
 - [x] Evaluation, Part 1
 - [x] Error Checking and Exceptions
 - [ ] Evaluation, Part 2
-- [ ] Building a REPL
+- [x] Building a REPL
 - [ ] Adding Variables and Assignment
 - [ ] Defining Scheme Functions: Closures and Environments
 - [ ] Creating IO Primitives
