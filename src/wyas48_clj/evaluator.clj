@@ -7,9 +7,8 @@
   [e]
   (match e
     [:number num]    num
-    [:string string] (try
-                       (Integer/parseInt string)
-                       (catch Exception ex (throw (type-mismatch-exception "number" e))))
+    [:string string] (try (Integer/parseInt string)
+                          (catch Exception ex (throw (type-mismatch-exception "number" e))))
     [:list [n]]      (coerce-to-number n)
     :else            (throw (type-mismatch-exception "number" e))))
 
