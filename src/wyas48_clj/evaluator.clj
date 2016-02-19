@@ -84,7 +84,9 @@
    "=" (typed-binary-primitive = :bool coerce-to-number)
    ">" (typed-binary-primitive > :bool coerce-to-number)
    "<" (typed-binary-primitive < :bool coerce-to-number)
-   "/=" (typed-binary-primitive (complement =) :bool coerce-to-number)})
+   "/=" (typed-binary-primitive (complement =) :bool coerce-to-number)
+   ">=" (typed-binary-primitive >= :bool coerce-to-number)
+   "<=" (typed-binary-primitive <= :bool coerce-to-number)})
 
 (defn- apply-func
   "Function application."
