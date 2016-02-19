@@ -23,24 +23,24 @@
   "Returns a string, enforcing balanced parenthesis.
   Continues prompting until the input is well-formed."
   [reader]
-  (loop [buffer ""]
-    (let [line (-> (.readLine reader) trim)
-          total-input (str buffer "\n" line)]
-      (cond
-        (= "\n" total-input)    ""
-        (balanced? total-input) total-input
-        :else                   (do (print "    ... > ")
-                                    (flush)
-                                    (recur total-input))))))
+  (let [reader (ConsoleReader.)]
+    (loop [buffer ""]
+      (let [line (-> (.readLine reader) trim)
+            total-input (str buffer "\n" line)]
+        (cond
+          (= "\n" total-input)    ""
+          (balanced? total-input) total-input
+          :else                   (do (print "    ... > ")
+                                      (flush)
+                                      (recur total-input)))))))
 
 (defn- repl
-  "Implementation of the main Read-Eval-Print-Loop.
-  Requires a JLine reader to grab input from."
-  [reader]
+  "Implementation of the main Read-Eval-Print-Loop."
+  []
   (while true
     (print "Scheme>>> ")
     (flush)
-    (let [input (read-until-balanced reader)]
+    (let [input (read-until-balanced)]
       (cond
         ;; Exit condition.
         (or (= input "quit") (= input "exit"))
@@ -57,8 +57,16 @@
                       (println (-> expr evaluate expr->string))))
             (catch Exception e (println (.getMessage e))))))))
 
+(defn- die
+  "Exits the program and returns a status to the OS."
+  [reason ok?]
+  (do (println reason)
+      (System/exit (if ok? 0 1))))
+
 (defn -main
   "Main entrypoint into the application."
   [& args]
-  (let [reader (ConsoleReader.)]
-    (repl reader)))
+  (match args
+    []     (repl)
+    [expr] (println "No support for command line evaluation yet.")
+    :else  (die "Invalid command line arguments provided." false)))
