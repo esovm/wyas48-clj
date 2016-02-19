@@ -1,6 +1,7 @@
 (ns wyas48-clj.core
   (:require [clojure.string :refer [trim]]
             [clojure.core.match :refer [match]]
+            [wyas48-clj.evaluator :refer [evaluate]]
             [wyas48-clj.parser :refer [parse-string]]
             [wyas48-clj.printer :refer [expr->string]])
   (:import (jline ConsoleReader))
@@ -52,8 +53,8 @@
         :else
           (let [result (parse-string input)]
             (match result
-              [:success exps] (doseq [exp exps] (println (expr->string exp)))
-              [:failure err]  (println "FAILURE" err)))))))
+              [:success exprs] (doseq [expr exprs] (println (-> expr evaluate expr->string)))
+              [:failure err]   (println "FAILURE" err)))))))
 
 (defn -main
   "Main entrypoint into the application."
