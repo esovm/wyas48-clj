@@ -16,6 +16,11 @@
   (fn [& args]
     [:number (reduce f (map coerce-to-number args))]))
 
+(defn- type-testing-primitive
+  [type]
+  (fn [arg]
+    [:bool (= (first arg) type)]))
+
 (def ^:private primitives
   "Primitive, built-in operations."
   {"+" (numeric-binary-primitive +)
@@ -24,7 +29,10 @@
    "/" (numeric-binary-primitive /)
    "mod" (numeric-binary-primitive mod)
    "quotient" (numeric-binary-primitive quot)
-   "remainder" (numeric-binary-primitive rem)})
+   "remainder" (numeric-binary-primitive rem)
+   "symbol?" (type-testing-primitive :atom)
+   "string?" (type-testing-primitive :string)
+   "number?" (type-testing-primitive :number)})
 
 (defn- apply-func
   "Function application."
