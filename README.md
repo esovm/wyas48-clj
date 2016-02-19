@@ -20,7 +20,7 @@ Press <kbd>C-c</kbd> to exit.
 
 - [x] Parsing
 - [x] Evaluation, Part 1
-- [ ] Error Checking and Exceptions
+- [x] Error Checking and Exceptions
 - [ ] Evaluation, Part 2
 - [ ] Building a REPL
 - [ ] Adding Variables and Assignment
