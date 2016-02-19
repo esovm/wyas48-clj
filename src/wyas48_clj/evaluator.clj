@@ -110,7 +110,7 @@
     [:list [:atom "quote"] quoted] quoted
     [:list [:atom "if"] pred conseq alt] (let [result (evaluate pred)]
                                            (match result
-                                             [:bool true] conseq
-                                             [:bool false] alt))
+                                             [:bool false] conseq
+                                             :else alt))
     [:list [:atom func] & args]    (apply-func func (map evaluate args))
     :else                          (throw (bad-special-form-exception expr))))
