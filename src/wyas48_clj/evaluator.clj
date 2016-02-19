@@ -86,7 +86,12 @@
    "<" (typed-binary-primitive < :bool coerce-to-number)
    "/=" (typed-binary-primitive (complement =) :bool coerce-to-number)
    ">=" (typed-binary-primitive >= :bool coerce-to-number)
-   "<=" (typed-binary-primitive <= :bool coerce-to-number)})
+   "<=" (typed-binary-primitive <= :bool coerce-to-number)
+   "string=?" (typed-binary-primitive = :bool coerce-to-string)
+   "string>?" (typed-binary-primitive #(> (compare %1 %2) 0) :bool coerce-to-string)
+   "string<?" (typed-binary-primitive #(< (compare %1 %2) 0) :bool coerce-to-string)
+   "string>=?" (typed-binary-primitive #(>= (compare %1 %2) 0) :bool coerce-to-string)
+   "string<=?" (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)})
 
 (defn- apply-func
   "Function application."
