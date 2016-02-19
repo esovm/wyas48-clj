@@ -28,11 +28,11 @@
 
 (defn- swap-values-primitive
   "Returns a primitive function that swaps values for from and to types."
-  [from to]
+  [from from-type-display-name to]
   (fn [arg]
     (match arg
       [from val] [to val]
-      :else [:bool false])))
+      :else (throw (type-mismatch-exception from-type-display-name arg)))))
 
 (def ^:private primitives
   "Primitive, built-in operations."
@@ -46,8 +46,8 @@
    "symbol?" (type-testing-primitive :atom)
    "string?" (type-testing-primitive :string)
    "number?" (type-testing-primitive :number)
-   "symbol->string" (swap-values-primitive :atom :string)
-   "string->symbol" (swap-values-primitive :string :atom)})
+   "symbol->string" (swap-values-primitive :atom "symbol" :string)
+   "string->symbol" (swap-values-primitive :string "string" :atom)})
 
 (defn- apply-func
   "Function application."
