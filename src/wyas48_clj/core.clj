@@ -22,17 +22,16 @@
 (defn- read-until-balanced
   "Returns a string, enforcing balanced parenthesis.
   Continues prompting until the input is well-formed."
-  []
-  (let [reader (ConsoleReader.)]
-    (loop [buffer ""]
-      (let [line (-> (.readLine reader) trim)
-            total-input (str buffer "\n" line)]
-        (cond
-          (= "\n" total-input)    ""
-          (balanced? total-input) total-input
-          :else                   (do (print "    ... > ")
-                                      (flush)
-                                      (recur total-input)))))))
+  [reader]
+  (loop [buffer ""]
+    (let [line (-> (.readLine reader) trim)
+          total-input (str buffer "\n" line)]
+      (cond
+        (= "\n" total-input)    ""
+        (balanced? total-input) total-input
+        :else                   (do (print "    ... > ")
+                                    (flush)
+                                    (recur total-input))))))
 
 (defn- rep
   "Read-Eval-Print... A single rep of a REPL? ;)"
@@ -46,21 +45,22 @@
 (defn- repl
   "Implementation of the main Read-Eval-Print-Loop."
   []
-  (while true
-    (print "Scheme>>> ")
-    (flush)
-    (let [input (read-until-balanced)]
-      (cond
-        ;; Exit condition.
-        (or (= input "quit") (= input "exit"))
-          (do (println "Exiting...")
-              (System/exit 0))
-        ;; Empty line.
-        (= "" input)
-          (do (println) (flush))
-        ;; Valid input.
-        :else
-          (rep input)))))
+  (let [reader (ConsoleReader.)]
+    (while true
+      (print "Scheme>>> ")
+      (flush)
+      (let [input (read-until-balanced reader)]
+        (cond
+          ;; Exit condition.
+          (or (= input "quit") (= input "exit"))
+            (do (println "Exiting...")
+                (System/exit 0))
+          ;; Empty line.
+          (= "" input)
+            (do (println) (flush))
+          ;; Valid input.
+          :else
+            (rep input))))))
 
 (defn- die
   "Exits the program and returns a status to the OS."
