@@ -57,6 +57,15 @@
                       (println (-> expr evaluate expr->string))))
             (catch Exception e (println (.getMessage e))))))))
 
+(defn- rep
+  "Read-Eval-Print... A single rep of a REPL? ;)"
+  [input]
+  (try
+    (let [result (parse-string input)]
+      (doseq [expr result]
+        (-> expr evaluate expr->string println)))
+    (catch Exception e (println (.getMessage e)))))
+
 (defn- die
   "Exits the program and returns a status to the OS."
   [reason ok?]
@@ -66,7 +75,7 @@
 (defn -main
   "Main entrypoint into the application."
   [& args]
-  (match args
-    nil    (repl)
-    [expr] (println "No support for command line evaluation yet.")
-    :else  (die "Invalid command line arguments provided." false)))
+  (match (vec args)
+    []      (repl)
+    [input] (rep input)
+    :else   (die "Invalid command line arguments provided." false)))
