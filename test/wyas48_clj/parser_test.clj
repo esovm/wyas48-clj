@@ -48,4 +48,5 @@
 (deftest dotted-parsing-test
   (testing "It can parse dotted pairs"
     (test-parse "(3 . 4)" [:dotted [:number 3] [:number 4]])
-    (test-parse "(3 . (4 . ()))" [:dotted [:number 3] [:dotted [:number 4] [:list]]])))
+    (test-parse "(3 . (4 . ()))" [:dotted [:number 3] [:dotted [:number 4] [:list]]])
+    (test-parse "(3 4 5 . 4)" [:dotted [:number 3] [:number 4] [:number 5] [:number 4]])))
