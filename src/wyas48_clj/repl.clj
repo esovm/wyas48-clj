@@ -19,7 +19,7 @@
       (zero? open))))
 
 (defn- read-until-balanced
-  "Returns a string, enforcing balanced parenthesis.
+  "Returns a string, enforcing balanced parentheses.
   Continues prompting until the input is well-formed."
   [reader]
   (loop [buffer ""]
