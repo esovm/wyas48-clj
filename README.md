@@ -14,7 +14,7 @@ This will place you in an interactive [REPL](https://en.wikipedia.org/wiki/Read%
     7
     Scheme>>> ...
 
-Press <kbd>C-c</kbd> to exit.
+Press <kbd>C-c</kbd> or type `quit` to exit.
 
 ## Chapters Completed
 
@@ -32,13 +32,13 @@ Press <kbd>C-c</kbd> to exit.
 
 - Instead of using a parser combinator library, I used [Instaparse](https://github.com/Engelberg/instaparse) and wrote an [Extended Backus–Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form) grammar.
 - I took a test-driven approach for developing this. Obviously, this wasn't the focus (and thus a fault) of the original tutorial.
-- My included REPL is a little bit more sophisticated: it supports a GNU Readline-like editing experience and allows for multi-line inputs.
 
 ## Enhancements
 
-- [x] REPL Readline support (via [JLine](http://jline.sourceforge.net/))
+- [x] Readline-like experience in the REPL (via [JLine](http://jline.sourceforge.net/))
+- [x] (Barebones) command completion in the REPL
 - [ ] Allow comments in grammar
-- [ ] "Standard library"
+- [ ] Standard library
 
 ## License
 
