@@ -96,6 +96,16 @@
         [:dotted _ nxt & rest] (into [:dotted nxt] rest)
         :else (throw (type-mismatch-exception "pair" arg))))))
 
+(def ^:private my-cons
+  "Implementation of primitive function, cons."
+  (require-arity 2
+    (fn [arg1 arg2]
+      (match [arg1 arg2]
+        [arg1 [:list]] [:list arg1]
+        [arg1 [:list & elems]] (into [:list arg1] elems)
+        [arg1 [:dotted & elems]] (into [:dotted arg1] elems)
+        [x y] [:dotted x y]))))
+
 (def ^:private primitives
   "Primitive, built-in operations."
   {"+" (numeric-folded-binary-primitive +)
@@ -124,7 +134,8 @@
    "string>=?" (typed-binary-primitive #(>= (compare %1 %2) 0) :bool coerce-to-string)
    "string<=?" (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)
    "car" car
-   "cdr" cdr})
+   "cdr" cdr
+   "cons" my-cons})
 
 (def primitive-names
   "List of primitive function names."
