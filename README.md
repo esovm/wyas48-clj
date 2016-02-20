@@ -36,7 +36,7 @@ Press <kbd>C-c</kbd> or type `quit` to exit.
 ## Enhancements
 
 - [x] Readline-like experience in the REPL (via [JLine](http://jline.sourceforge.net/))
-- [x] (Barebones) command completion in the REPL
+- [x] Barebones command completion in the REPL
 - [ ] Allow comments in grammar
 - [ ] Standard library
 
