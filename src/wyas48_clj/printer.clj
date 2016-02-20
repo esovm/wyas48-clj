@@ -13,6 +13,6 @@
     [:dotted & exprs]  (let [tail (last exprs)
                              head (drop-last exprs)
                              strings (map expr->string head)]
-                         (str "(" (join " " strings) " . " (expr->string tail) ")"))
+                         (format "(%s . %s)" (join " " strings) (expr->string tail)))
     [:list & exprs]    (let [strings (map expr->string exprs)]
-                         (str "(" (join " " strings) ")"))))
+                         (format "(%s)" (join " " strings)))))
