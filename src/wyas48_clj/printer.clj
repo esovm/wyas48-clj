@@ -7,7 +7,7 @@
   [expr]
   (match expr
     [:atom atom]       atom
-    [:string string]   (str "\"" string "\"")
+    [:string string]   (format "\"%s\"" string)
     [:number num]      (str num)
     [:bool b]          (if b "#t" "#f")
     [:dotted & exprs]  (let [tail (last exprs)
