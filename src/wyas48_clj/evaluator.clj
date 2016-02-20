@@ -29,54 +29,63 @@
   [e]
   (match e
     [:bool b] b
-    :else     (throw (type-mismatch-exception "bool" e))))
+    :else (throw (type-mismatch-exception "bool" e))))
 
 ;;; Primitive HOFs
 ;;; Functions that *produce* primitive functions to be loaded in the environment
 
+(defn- require-arity
+  "Produces a function wrapping f which requires n args. Boilerplate removal."
+  ([n f]
+    (require-arity = n f))
+  ([check n f]
+    (fn [& args]
+      (if (check (count args) n)
+        (apply f args)
+        (throw (invalid-argument-count-exception n args))))))
+
 (defn- typed-binary-primitive
   "Returns a primitive function performing a *strictly* binary version of f among its arguments."
   [f result-type coercer]
-  (fn [& args]
-    (if (= 2 (count args))
-      (let [[arg1 arg2] (map coercer args)]
-        [result-type (f arg1 arg2)])
-      (throw (invalid-argument-count-exception 2 args)))))
+  (require-arity 2
+    (fn [arg1 arg2]
+      [result-type (f (coercer arg1) (coercer arg2))])))
 
-(defn- numeric-binary-primitive
+(defn- numeric-folded-binary-primitive
   "Returns a primitive function performing a folded version of f among its arguments."
   [f]
-  (fn [& args]
-    (if (>= (count args) 2)
-      [:number (reduce f (map coerce-to-number args))]
-      (throw (invalid-argument-count-exception 2 args)))))
+  (require-arity >= 2
+    (fn [& args]
+      [:number (reduce f (map coerce-to-number args))])))
 
 (defn- type-testing-primitive
   "Returns a primitive function that tests an argument against the given type."
   [type]
-  (fn [arg]
-    (match arg
-      [arg-type _] [:bool (= type arg-type)])))
+  (require-arity 1
+    (fn [arg]
+      (match arg
+        [arg-type _] [:bool (= type arg-type)]))))
 
 (defn- swap-types-primitive
   "Returns a primitive function that swaps values for from and to types."
   [from from-type-display-name to]
-  (fn [arg]
-    (match arg
-      [from val] [to val]
-      :else (throw (type-mismatch-exception from-type-display-name arg)))))
+  (require-arity 1
+    (fn [arg]
+      (match arg
+        [from val] [to val]
+        :else (throw (type-mismatch-exception from-type-display-name arg))))))
 
 ;;; Built-in primitives & evaluation
 
 (def ^:private primitives
   "Primitive, built-in operations."
-  {"+" (numeric-binary-primitive +)
-   "-" (numeric-binary-primitive -)
-   "*" (numeric-binary-primitive *)
-   "/" (numeric-binary-primitive /)
-   "mod" (numeric-binary-primitive mod)
-   "quotient" (numeric-binary-primitive quot)
-   "remainder" (numeric-binary-primitive rem)
+  {"+" (numeric-folded-binary-primitive +)
+   "-" (numeric-folded-binary-primitive -)
+   "*" (numeric-folded-binary-primitive *)
+   "/" (numeric-folded-binary-primitive /)
+   "mod" (numeric-folded-binary-primitive mod)
+   "quotient" (numeric-folded-binary-primitive quot)
+   "remainder" (numeric-folded-binary-primitive rem)
    "symbol?" (type-testing-primitive :atom)
    "string?" (type-testing-primitive :string)
    "number?" (type-testing-primitive :number)
