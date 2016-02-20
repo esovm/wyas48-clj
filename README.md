@@ -32,7 +32,9 @@ In addition, the following function primitives are also implemented:
 
 `||` `&&` `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `car` `cdr` `cons` `mod` `number?` `quotient` `remainder` `string->symbol` `string<=?` `string<?` `string=?` `string>=?` `string>?` `string?` `symbol->string` `symbol?`
 
-## Chapters Completed
+## Status
+
+### Tutorial Chapters Completed
 
 - [x] Parsing
 - [x] Evaluation, Part 1
@@ -44,12 +46,12 @@ In addition, the following function primitives are also implemented:
 - [ ] Creating IO Primitives
 - [ ] Towards a Standard Library: Fold and Unfold
 
-## Differences in Approach
+### Differences in Approach
 
 - Instead of using a parser combinator library, I used [Instaparse](https://github.com/Engelberg/instaparse) and wrote an [Extended Backus–Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form) grammar.
 - I took a test-driven approach for developing this. Obviously, this wasn't the focus (or a fault) of the original tutorial.
 
-## Enhancements
+### Enhancements
 
 - [x] Readline-like experience in the REPL (via [JLine](http://jline.sourceforge.net/))
 - [x] Barebones command completion in the REPL
