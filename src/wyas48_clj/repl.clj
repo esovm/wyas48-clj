@@ -7,8 +7,8 @@
   (:import (jline ConsoleReader SimpleCompletor)))
 
 (defn- balanced?
-  "Predicate determining if the input string, s, has balanced parenthesis.
-  If no parenthesis are in the string, true is returned."
+  "Predicate determining if the input string, s, has balanced parentheses.
+  If no parentheses are in the string, true is returned."
   [s]
   (loop [check-str (seq s), open 0]
     (if (seq? check-str)
