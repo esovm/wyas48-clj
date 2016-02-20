@@ -82,8 +82,8 @@
   (require-arity 1
     (fn [arg]
       (match arg
-        [:list x & _] x
-        [:dotted x & _] x
+        [:list fst & _] fst
+        [:dotted fst & _] fst
         :else (throw (type-mismatch-exception "pair" arg))))))
 
 (def ^:private cdr
