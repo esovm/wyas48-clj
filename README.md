@@ -36,7 +36,7 @@ Press <kbd>C-c</kbd> to exit.
 
 ## Enhancements
 
-- [x] REPL Readline support
+- [x] REPL Readline support (via [JLine](http://jline.sourceforge.net/))
 - [ ] Allow comments in grammar
 - [ ] "Standard library"
 
