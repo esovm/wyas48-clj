@@ -1,10 +1,10 @@
 (ns wyas48-clj.core
   (:require [clojure.string :refer [trim]]
             [clojure.core.match :refer [match]]
-            [wyas48-clj.evaluator :refer [evaluate]]
+            [wyas48-clj.evaluator :refer [evaluate primitive-names]]
             [wyas48-clj.parser :refer [parse-string]]
             [wyas48-clj.printer :refer [expr->string]])
-  (:import (jline ConsoleReader))
+  (:import (jline ConsoleReader SimpleCompletor))
   (:gen-class))
 
 (defn- balanced?
@@ -45,7 +45,10 @@
 (defn- repl
   "Implementation of the main Read-Eval-Print-Loop."
   []
-  (let [reader (ConsoleReader.)]
+  (let [reader (ConsoleReader.)
+        primitive-prefixes (map #(str "(" %) primitive-names)
+        primitive-completor (SimpleCompletor. (into-array primitive-prefixes))]
+    (.addCompletor reader primitive-completor)
     (while true
       (print "Scheme>>> ")
       (flush)

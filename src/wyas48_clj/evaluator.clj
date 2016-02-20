@@ -105,6 +105,10 @@
    "string>=?" (typed-binary-primitive #(>= (compare %1 %2) 0) :bool coerce-to-string)
    "string<=?" (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)})
 
+(def primitive-names
+  "List of primitive function names."
+  (keys primitives))
+
 (defn- apply-func
   "Function application."
   [func-as-name args]
