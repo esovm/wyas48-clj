@@ -77,6 +77,25 @@
 
 ;;; Built-in primitives & evaluation
 
+(def ^:private car
+  "Implementation of primitive function, car."
+  (require-arity 1
+    (fn [arg]
+      (match arg
+        [:list x & _] x
+        [:dotted x & _] x
+        :else (throw (type-mismatch-exception "pair" arg))))))
+
+(def ^:private cdr
+  "Implementation of primitive function, cdr."
+  (require-arity 1
+    (fn [arg]
+      (match arg
+        [:list _ & rest] (into [:list] rest)
+        [:dotted _ last] last
+        [:dotted _ nxt & rest] (into [:dotted nxt] rest)
+        :else (throw (type-mismatch-exception "pair" arg))))))
+
 (def ^:private primitives
   "Primitive, built-in operations."
   {"+" (numeric-folded-binary-primitive +)
@@ -103,7 +122,9 @@
    "string>?" (typed-binary-primitive #(> (compare %1 %2) 0) :bool coerce-to-string)
    "string<?" (typed-binary-primitive #(< (compare %1 %2) 0) :bool coerce-to-string)
    "string>=?" (typed-binary-primitive #(>= (compare %1 %2) 0) :bool coerce-to-string)
-   "string<=?" (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)})
+   "string<=?" (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)
+   "car" car
+   "cdr" cdr})
 
 (def primitive-names
   "List of primitive function names."
