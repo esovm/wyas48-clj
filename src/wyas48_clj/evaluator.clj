@@ -83,6 +83,8 @@
    "string->symbol" (swap-types-primitive :string "string" :atom)
    "=" (typed-binary-primitive = :bool coerce-to-number)
    ">" (typed-binary-primitive > :bool coerce-to-number)
+   "&&" (typed-binary-primitive #(and %1 %2) :bool coerce-to-bool)
+   "||" (typed-binary-primitive #(or %1 %2) :bool coerce-to-bool)
    "<" (typed-binary-primitive < :bool coerce-to-number)
    "/=" (typed-binary-primitive (complement =) :bool coerce-to-number)
    ">=" (typed-binary-primitive >= :bool coerce-to-number)
