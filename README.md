@@ -4,17 +4,33 @@ A work-in-progress port of [Write Yourself a Scheme in 48 Hours](https://en.wiki
 
 ## Usage
 
+### Running the REPL
+
 To run the project, execute:
 
     $ lein run
 
 This will place you in an interactive [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop):
 
-    Scheme>>> (+ 3 4)
-    7
-    Scheme>>> ...
+```
+Scheme>>> (+ 3 4)
+7
+Scheme>>> (if (&& #t #f)
+    ... >   "yep"
+    ... >   "nope")
+"nope"
+Scheme>>> ...
+```
 
 Press <kbd>C-c</kbd> or type `quit` to exit.
+
+### Built-ins
+
+`if` and `quote` are implemented as special forms.
+
+In addition, the following function primitives are also implemented:
+
+`||` `&&` `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `car` `cdr` `cons` `mod` `number?` `quotient` `remainder` `string->symbol` `string<=?` `string<?` `string=?` `string>=?` `string>?` `string?` `symbol->string` `symbol?`
 
 ## Chapters Completed
 
@@ -31,7 +47,7 @@ Press <kbd>C-c</kbd> or type `quit` to exit.
 ## Differences in Approach
 
 - Instead of using a parser combinator library, I used [Instaparse](https://github.com/Engelberg/instaparse) and wrote an [Extended Backus–Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form) grammar.
-- I took a test-driven approach for developing this. Obviously, this wasn't the focus (and thus a fault) of the original tutorial.
+- I took a test-driven approach for developing this. Obviously, this wasn't the focus (or a fault) of the original tutorial.
 
 ## Enhancements
 
