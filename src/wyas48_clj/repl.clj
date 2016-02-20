@@ -59,12 +59,9 @@
       (let [input (read-until-balanced reader)]
         (cond
           ;; Exit condition.
-          (or (= input "quit") (= input "exit"))
-            (do (println "Exiting...")
-                (System/exit 0))
+          (or (= input "quit") (= input "exit")) (do (println "Exiting...")
+                                                     (System/exit 0))
           ;; Empty line.
-          (= "" input)
-            (do (println) (flush))
+          (= "" input) (do (println) (flush))
           ;; Valid input.
-          :else
-            (run-one input))))))
+          :else (run-one input))))))
