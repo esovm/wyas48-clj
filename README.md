@@ -1,4 +1,4 @@
-# wyas48-clj
+# wyas48-clj ![Build badge](https://travis-ci.org/cfdrake/wyas48-clj.svg?branch=master)
 
 A work-in-progress port of [Write Yourself a Scheme in 48 Hours](https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours) to Clojure.
 
