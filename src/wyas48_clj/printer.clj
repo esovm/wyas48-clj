@@ -2,6 +2,15 @@
   (:require [clojure.string :refer [join]]
             [clojure.core.match :refer [match]]))
 
+(declare expr->string)
+
+(defn exprs-joined-by-spaces
+  "Produces a string with the elements of an expression list joined by spaces."
+  [exprs]
+  (->> exprs
+      (map expr->string)
+      (join " ")))
+
 (defn expr->string
   "Calculates the String representation of an expression."
   [expr]
@@ -10,9 +19,7 @@
     [:string string]   (format "\"%s\"" string)
     [:number num]      (str num)
     [:bool b]          (if b "#t" "#f")
-    [:dotted & exprs]  (let [tail (last exprs)
-                             head (drop-last exprs)
-                             strings (map expr->string head)]
-                         (format "(%s . %s)" (join " " strings) (expr->string tail)))
-    [:list & exprs]    (let [strings (map expr->string exprs)]
-                         (format "(%s)" (join " " strings)))))
+    [:dotted & exprs]  (let [tail (expr->string (last exprs))
+                             head (exprs-joined-by-spaces (drop-last exprs))]
+                         (format "(%s . %s)" head tail))
+    [:list & exprs]    (format "(%s)" (exprs-joined-by-spaces exprs))))
