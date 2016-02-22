@@ -41,4 +41,5 @@
 (deftest dotted-printing-test
   (testing "It can print dotted pairs"
     (test-print [:dotted [:number 3] [:number 4]] "(3 . 4)")
+    (test-print [:dotted [:number 3] [:dotted [:number 4] [:list]]] "(3 . (4 . ()))")
     (test-print [:dotted [:number 3] [:dotted [:number 4] [:list]]] "(3 . (4 . ()))")))
