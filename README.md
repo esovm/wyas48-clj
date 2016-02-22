@@ -41,7 +41,7 @@ In addition, the following function primitives are also implemented:
 - [x] Parsing
 - [x] Evaluation, Part 1
 - [x] Error Checking and Exceptions
-- [ ] Evaluation, Part 2
+- [x] Evaluation, Part 2
 - [x] Building a REPL
 - [ ] Adding Variables and Assignment
 - [ ] Defining Scheme Functions: Closures and Environments
