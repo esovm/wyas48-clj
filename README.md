@@ -13,12 +13,12 @@ To run the project, execute:
 This will place you in an interactive [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop):
 
 ```
-Scheme>>> (+ 3 4)
+Scheme>>> (define abc (+ 3 4))
 7
-Scheme>>> (if (&& #t #f)
-    ... >   "yep"
-    ... >   "nope")
-"nope"
+Scheme>>> (if (> abc 3)
+    ... >   #t
+    ... >   "err, nope...")
+#t
 Scheme>>> ...
 ```
 
