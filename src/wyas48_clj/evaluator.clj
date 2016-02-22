@@ -106,6 +106,31 @@
         [arg1 [:dotted & elems]] (into [:dotted arg1] elems)
         [x y] [:dotted x y]))))
 
+(def ^:private zip (partial map vector))
+
+(declare lists-eqv?)
+
+(def ^:private eqv?
+  "Implementation of primitive function, eqv?."
+  (require-arity 2
+    (fn [arg1 arg2]
+      (match [arg1 arg2]
+        [[:bool b1] [:bool b2]] [:bool (= b1 b2)]
+        [[:number n1] [:number n2]] [:bool (= n1 n2)]
+        [[:string s1] [:string s2]] [:bool (= s1 s2)]
+        [[:atom a1] [:atom a2]] [:bool (= a1 a2)]
+        [[:list & l1] [:list & l2]] [:bool (lists-eqv? l1 l2)]
+        [[:dotted & l1] [:dotted & l2]] [:bool (lists-eqv? l1 l2)]
+        :else [:bool false]))))
+
+(defn- lists-eqv?
+  "Determines if two lists of Scheme data are equivalent."
+  [l1 l2]
+  (and (= (count l1) (count l2))
+       (every? (fn [pair]
+                 (= (second (apply eqv? pair)) true))
+               (zip l1 l2))))
+
 (def ^:private primitives
   "Primitive, built-in operations."
   {"+" (numeric-folded-binary-primitive +)
@@ -135,7 +160,9 @@
    "string<=?" (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)
    "car" car
    "cdr" cdr
-   "cons" my-cons})
+   "cons" my-cons
+   "eq?" eqv?
+   "eqv?" eqv?})
 
 (def primitive-names
   "List of primitive function names."
