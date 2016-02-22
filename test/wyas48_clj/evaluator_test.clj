@@ -42,7 +42,7 @@
     (is (= (evaluate [:list [:atom "symbol->string"] [:list [:atom "quote"] [:atom "test"]]] test-env) [:string "test"]))
     (is (= (evaluate [:list [:atom "string->symbol"] [:string "some-symbol"]] test-env) [:atom "some-symbol"]))))
 
-(deftest evaluation-part-1-test
+(deftest evaluation-part-2-test
   (testing
     (is (= (evaluate [:list [:atom "="] [:number 3] [:number 5]] test-env) [:bool false]))
     (is (= (evaluate [:list [:atom "="] [:number 3] [:number 3]] test-env) [:bool true]))
