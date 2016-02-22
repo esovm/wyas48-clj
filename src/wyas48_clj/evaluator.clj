@@ -207,7 +207,7 @@
 (defn- define-var!
   "Updates a variable's value that may or may not be in the environment."
   [var value env]
-  (swap! assoc env var value))
+  (swap! env assoc var value))
 
 (defn- set-var!
   "Sets an already bound variable."
@@ -236,5 +236,11 @@
                                            (match result
                                              [:bool false] alt
                                              :else conseq))
+    [:list [:atom "set!"] [:atom id] val] (let [evaluated-val (evaluate val env)]
+                                            (set-var! id evaluated-val env)
+                                            evaluated-val)
+    [:list [:atom "define"] [:atom id] val] (let [evaluated-val (evaluate val env)]
+                                              (define-var! id evaluated-val env)
+                                              evaluated-val)
     [:list [:atom func] & args]    (apply-func func (map #(evaluate % env) args))
     :else                          (throw (bad-special-form-exception expr))))

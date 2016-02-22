@@ -26,7 +26,7 @@ Press <kbd>C-c</kbd> or type `quit` to exit.
 
 ### Built-ins
 
-`if` and `quote` are implemented as special forms.
+`if`, `quote`, `define`, and `set!` are implemented as special forms.
 
 In addition, the following function primitives are also implemented:
 
