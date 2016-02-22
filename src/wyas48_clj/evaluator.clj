@@ -230,6 +230,7 @@
     [:string string]               expr
     [:bool b]                      expr
     [:number num]                  expr
+    [:atom id]                     (get-var id env)
     [:list [:atom "quote"] quoted] quoted
     [:list [:atom "if"] pred conseq alt] (let [result (evaluate pred env)]
                                            (match result

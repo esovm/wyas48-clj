@@ -29,8 +29,8 @@
 
 (defn unbound-var-exception
   "Exception for referencing an unbound variable."
-  [var]
-  (ex-info (format "Getting an unbound variable " var) {}))
+  [msg var]
+  (ex-info (format "%s: %s" msg var) {}))
 
 (defn generic-exception
   "A generic exception."
