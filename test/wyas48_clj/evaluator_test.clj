@@ -53,7 +53,4 @@
     (is (= (evaluate [:list [:atom ">="] [:number 15] [:number 5]] test-env) [:bool true]))
     (is (= (evaluate [:list [:atom ">="] [:number 5] [:number 15]] test-env) [:bool false]))
     (is (= (evaluate [:list [:atom "<="] [:number 15] [:number 5]] test-env) [:bool false]))
-    (is (= (evaluate [:list [:atom "<="] [:number 5] [:number 15]] test-env) [:bool true]))
-    (is (= (evaluate [:list [:atom "mod"] [:number 15] [:number 5]] test-env) [:number 0]))
-    (is (= (evaluate [:list [:atom "quotient"] [:number 15] [:number 2]] test-env) [:number 7]))
-    (is (= (evaluate [:list [:atom "remainder"] [:number 15] [:number 2]] test-env) [:number 1]))))
+    (is (= (evaluate [:list [:atom "<="] [:number 5] [:number 15]] test-env) [:bool true]))))
