@@ -75,7 +75,7 @@
         [from val] [to val]
         :else (throw (type-mismatch-exception from-type-display-name arg))))))
 
-;;; Built-in primitives & evaluation
+;;; Built-in primitives
 
 (def ^:private car
   "Implementation of primitive function, car."
@@ -185,6 +185,36 @@
 (def primitive-names
   "List of primitive function names."
   (keys primitives))
+
+;;; Environment and evaluation
+
+(defn make-environment
+  "Creates a new environment."
+  {})
+
+(defn- get-var
+  "Retrives a variable's value from an environment."
+  [var env]
+  (if-let [value (get @env var)]
+    value
+    (throw (unbound-var-exception "Getting an unbound variable" var))))
+
+(defn- is-bound
+  "Checks that a variable is bound in an environment."
+  [var env]
+  (not (nil? get-var env)))
+
+(defn- define-var!
+  "Updates a variable's value that may or may not be in the environment."
+  [var value env]
+  (swap! assoc env var value))
+
+(defn- set-var!
+  "Sets an already bound variable."
+  [var value env]
+  (if (is-bound var env)
+    (define-var! var value env)
+    (throw (unbound-var-exception "Setting an unbound variable" var))))
 
 (defn- apply-func
   "Function application."
