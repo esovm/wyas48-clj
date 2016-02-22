@@ -46,7 +46,7 @@
           eval-fn (fn [expr] (evaluate expr env))]
       (doseq [expr result]
         (-> expr eval-fn expr->string println)))
-    (catch Exception e (println e))))
+    (catch Exception e (println (.getMessage e)))))
 
 (defn repl
   "Implementation of the main Read-Eval-Print-Loop."
