@@ -43,7 +43,7 @@ In addition, the following function primitives are also implemented:
 - [x] Error Checking and Exceptions
 - [x] Evaluation, Part 2
 - [x] Building a REPL
-- [ ] Adding Variables and Assignment
+- [x] Adding Variables and Assignment
 - [ ] Defining Scheme Functions: Closures and Environments
 - [ ] Creating IO Primitives
 - [ ] Towards a Standard Library: Fold and Unfold
