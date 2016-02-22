@@ -131,6 +131,23 @@
                  (= (second (apply eqv? pair)) true))
                (zip l1 l2))))
 
+(defn- equal-coerced?
+  "Determines if the two expressions are equivalent when passed through
+  a given coercer function. Captures coercion exceptions and returns false
+  instead."
+  [e1 e2 coercer]
+  (try
+    (= (coercer e1) (coercer e2))
+    (catch Exception e false)))
+
+(def ^:private equal?
+  "Determines if the given two expressions are equivalent when coerced."
+  (require-arity 2
+    (fn [arg1 arg2]
+      [:bool (reduce #(or %1 %2)
+                     (map #(equal-coerced? arg1 arg2 %)
+                          [coerce-to-number coerce-to-string coerce-to-bool]))])))
+
 (def ^:private primitives
   "Primitive, built-in operations."
   {"+" (numeric-folded-binary-primitive +)
@@ -162,7 +179,8 @@
    "cdr" cdr
    "cons" my-cons
    "eq?" eqv?
-   "eqv?" eqv?})
+   "eqv?" eqv?
+   "equal?" equal?})
 
 (def primitive-names
   "List of primitive function names."
