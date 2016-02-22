@@ -30,7 +30,9 @@ Press <kbd>C-c</kbd> or type `quit` to exit.
 
 In addition, the following function primitives are also implemented:
 
-`||` `&&` `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `car` `cdr` `cons` `mod` `number?` `quotient` `remainder` `string->symbol` `string<=?` `string<?` `string=?` `string>=?` `string>?` `string?` `symbol->string` `symbol?`
+`||` `&&` `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `car` `cdr` `cons` `eq?`
+`eqv?` `equal?` `mod` `number?` `quotient` `remainder` `string->symbol` `string<=?`
+`string<?` `string=?` `string>=?` `string>?` `string?` `symbol->string` `symbol?`
 
 ## Status
 
