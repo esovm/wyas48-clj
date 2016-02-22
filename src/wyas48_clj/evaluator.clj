@@ -188,7 +188,7 @@
 
 ;;; Environment and evaluation
 
-(defn make-environment
+(defn make-environment []
   "Creates a new environment."
   {})
 
@@ -202,7 +202,7 @@
 (defn- is-bound
   "Checks that a variable is bound in an environment."
   [var env]
-  (not (nil? get-var env)))
+  (not (nil? (get @env var))))
 
 (defn- define-var!
   "Updates a variable's value that may or may not be in the environment."
@@ -225,15 +225,15 @@
 
 (defn evaluate
   "Evaluates the value of the given input expression."
-  [expr]
+  [expr env]
   (match expr
     [:string string]               expr
     [:bool b]                      expr
     [:number num]                  expr
     [:list [:atom "quote"] quoted] quoted
-    [:list [:atom "if"] pred conseq alt] (let [result (evaluate pred)]
+    [:list [:atom "if"] pred conseq alt] (let [result (evaluate pred env)]
                                            (match result
                                              [:bool false] alt
                                              :else conseq))
-    [:list [:atom func] & args]    (apply-func func (map evaluate args))
+    [:list [:atom func] & args]    (apply-func func (map #(evaluate % env) args))
     :else                          (throw (bad-special-form-exception expr))))

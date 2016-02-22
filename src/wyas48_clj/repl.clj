@@ -40,16 +40,17 @@
 
 (defn run-one
   "Read-Eval-Print... A single rep of a REPL? ;)"
-  [input]
+  [input env]
   (try
-    (let [result (parse-string input)]
+    (let [result (parse-string input)
+          eval-fn (fn [expr] (evaluate expr env))]
       (doseq [expr result]
-        (-> expr evaluate expr->string println)))
-    (catch Exception e (println (.getMessage e)))))
+        (-> expr eval-fn expr->string println)))
+    (catch Exception e (println e))))
 
 (defn repl
   "Implementation of the main Read-Eval-Print-Loop."
-  []
+  [env]
   (let [reader (ConsoleReader.)
         primitive-completor (create-completor primitive-names)]
     (.addCompletor reader primitive-completor)
@@ -64,4 +65,4 @@
           ;; Empty line.
           (= "" input) (do (println) (flush))
           ;; Valid input.
-          :else (run-one input))))))
+          :else (run-one input env))))))
