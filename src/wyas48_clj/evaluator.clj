@@ -150,37 +150,37 @@
 
 (def ^:private primitives
   "Primitive, built-in operations."
-  {"+" (numeric-folded-binary-primitive +)
-   "-" (numeric-folded-binary-primitive -)
-   "*" (numeric-folded-binary-primitive *)
-   "/" (numeric-folded-binary-primitive /)
-   "mod" (numeric-folded-binary-primitive mod)
-   "quotient" (numeric-folded-binary-primitive quot)
-   "remainder" (numeric-folded-binary-primitive rem)
-   "symbol?" (type-testing-primitive :atom)
-   "string?" (type-testing-primitive :string)
-   "number?" (type-testing-primitive :number)
-   "symbol->string" (swap-types-primitive :atom "symbol" :string)
-   "string->symbol" (swap-types-primitive :string "string" :atom)
-   "=" (typed-binary-primitive = :bool coerce-to-number)
-   ">" (typed-binary-primitive > :bool coerce-to-number)
-   "&&" (typed-binary-primitive #(and %1 %2) :bool coerce-to-bool)
-   "||" (typed-binary-primitive #(or %1 %2) :bool coerce-to-bool)
-   "<" (typed-binary-primitive < :bool coerce-to-number)
-   "/=" (typed-binary-primitive (complement =) :bool coerce-to-number)
-   ">=" (typed-binary-primitive >= :bool coerce-to-number)
-   "<=" (typed-binary-primitive <= :bool coerce-to-number)
-   "string=?" (typed-binary-primitive = :bool coerce-to-string)
-   "string>?" (typed-binary-primitive #(> (compare %1 %2) 0) :bool coerce-to-string)
-   "string<?" (typed-binary-primitive #(< (compare %1 %2) 0) :bool coerce-to-string)
-   "string>=?" (typed-binary-primitive #(>= (compare %1 %2) 0) :bool coerce-to-string)
-   "string<=?" (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)
-   "car" car
-   "cdr" cdr
-   "cons" my-cons
-   "eq?" eqv?
-   "eqv?" eqv?
-   "equal?" equal?})
+  {"+" [:primitive (numeric-folded-binary-primitive +)]
+   "-" [:primitive (numeric-folded-binary-primitive -)]
+   "*" [:primitive (numeric-folded-binary-primitive *)]
+   "/" [:primitive (numeric-folded-binary-primitive /)]
+   "mod" [:primitive (numeric-folded-binary-primitive mod)]
+   "quotient" [:primitive (numeric-folded-binary-primitive quot)]
+   "remainder" [:primitive (numeric-folded-binary-primitive rem)]
+   "symbol?" [:primitive (type-testing-primitive :atom)]
+   "string?" [:primitive (type-testing-primitive :string)]
+   "number?" [:primitive (type-testing-primitive :number)]
+   "symbol->string" [:primitive (swap-types-primitive :atom "symbol" :string)]
+   "string->symbol" [:primitive (swap-types-primitive :string "string" :atom)]
+   "=" [:primitive (typed-binary-primitive = :bool coerce-to-number)]
+   ">" [:primitive (typed-binary-primitive > :bool coerce-to-number)]
+   "&&" [:primitive (typed-binary-primitive #(and %1 %2) :bool coerce-to-bool)]
+   "||" [:primitive (typed-binary-primitive #(or %1 %2) :bool coerce-to-bool)]
+   "<" [:primitive (typed-binary-primitive < :bool coerce-to-number)]
+   "/=" [:primitive (typed-binary-primitive (complement =) :bool coerce-to-number)]
+   ">=" [:primitive (typed-binary-primitive >= :bool coerce-to-number)]
+   "<=" [:primitive (typed-binary-primitive <= :bool coerce-to-number)]
+   "string=?" [:primitive (typed-binary-primitive = :bool coerce-to-string)]
+   "string>?" [:primitive (typed-binary-primitive #(> (compare %1 %2) 0) :bool coerce-to-string)]
+   "string<?" [:primitive (typed-binary-primitive #(< (compare %1 %2) 0) :bool coerce-to-string)]
+   "string>=?" [:primitive (typed-binary-primitive #(>= (compare %1 %2) 0) :bool coerce-to-string)]
+   "string<=?" [:primitive (typed-binary-primitive #(<= (compare %1 %2) 0) :bool coerce-to-string)]
+   "car" [:primitive car]
+   "cdr" [:primitive cdr]
+   "cons" [:primitive my-cons]
+   "eq?" [:primitive eqv?]
+   "eqv?" [:primitive eqv?]
+   "equal?" [:primitive equal?]})
 
 (def primitive-names
   "List of primitive function names."
@@ -190,7 +190,7 @@
 
 (defn make-environment []
   "Creates a new environment."
-  {})
+  primitives)
 
 (defn- get-var
   "Retrives a variable's value from an environment."
