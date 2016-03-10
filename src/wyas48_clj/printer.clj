@@ -19,6 +19,9 @@
     [:string string]   (format "\"%s\"" string)
     [:number num]      (str num)
     [:bool b]          (if b "#t" "#f")
+    [:primitive p]     "<primitive>"
+    [:func p v b c]    (let [var-arg (if v (format " . %s" v) "")]
+                         (format "(lambda (%s%s) ...)" (join " " p) var-arg))
     [:dotted & exprs]  (let [tail (expr->string (last exprs))
                              head (exprs-joined-by-spaces (drop-last exprs))]
                          (format "(%s . %s)" head tail))
