@@ -1,6 +1,7 @@
 (ns wyas48-clj.printer
   (:require [clojure.string :refer [join]]
-            [clojure.core.match :refer [match]]))
+            [clojure.core.match :refer [match]]
+            [clansi :refer :all]))
 
 (declare expr->string)
 
@@ -16,9 +17,9 @@
   [expr]
   (match expr
     [:atom atom]       atom
-    [:string string]   (format "\"%s\"" string)
-    [:number num]      (str num)
-    [:bool b]          (if b "#t" "#f")
+    [:string string]   (style (format "\"%s\"" string) :green)
+    [:number num]      (style (str num) :red)
+    [:bool b]          (style (if b "#t" "#f") :red)
     [:primitive p]     "<primitive>"
     [:func p v b c]    (let [var-arg (if v (format " . %s" v) "")]
                          (format "(lambda (%s%s) ...)" (join " " p) var-arg))
